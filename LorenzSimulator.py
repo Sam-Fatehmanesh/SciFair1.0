@@ -93,3 +93,9 @@ Ts = 0.00000001
 ohms += parralelCapsitorsresistance(0.08,4)
 
 thoreticals(Ts,time,Vo,capasitance,ohms,radius,la,lb,Uo,m,Fr)
+
+'''
+>>0.01791744
+>>11.028229064853711
+>>22.408752679463337
+'''
