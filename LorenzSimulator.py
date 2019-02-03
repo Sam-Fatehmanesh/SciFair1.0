@@ -48,6 +48,7 @@ def thoreticals(timestep,T,Vo,c,ohms,r,la,lb,Uo,m,Fr):
     vF = 0
     Ff = 0
     nF = 0
+    #this for loop substitutes for calculus
     for n in range(1,T):
         if(X >= 0.14):
             print(n*timestep)
