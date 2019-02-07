@@ -23,7 +23,7 @@ def Current(c,ohms,Vo,t1,t2):
     I = abs(c * ( (V2-V1)   /    dT  ) )
     return I
 
-def Force(I,r,l,Uo):
+def LorForce(I,r,l,Uo):
     # this equation is made with both the magntic feild
     # stength at a distance form a wire equation and from
     # the force on a wire in a magnetic feild formula
@@ -43,12 +43,12 @@ def Acceleration(F,m):
 #displacment is the same as velosity but with the added factors of 1/2 and 1
 def thoreticals(timestep,T,Vo,c,ohms,r,la,lb,Uo,m,Fr):
     X = 0
-    V = 0
+    V = 1
     I = 0
     vF = 0
     Ff = 0
     nF = 0
-    #this for loop substitutes for calculus
+    #loop where the time updates are added until the desired time is reached
     for n in range(1,T):
         if(X >= 0.14):
             print(n*timestep)
@@ -56,16 +56,11 @@ def thoreticals(timestep,T,Vo,c,ohms,r,la,lb,Uo,m,Fr):
             print(V)
             break
         I = Current(c,ohms,Vo,(n*timestep)-timestep,n*timestep)
-        vF = 2* Force(I,r,la,Uo)
-        Ff = Fr * 2 * Force(I,r-(lb/2),lb,Uo)
+        vF = 2* LorForce(I,r,la,Uo)
+        Ff = Fr * 2 * LorForce(I,r-(lb/2),lb,Uo)
         nF = NetForce(Ff,vF)
-        #nF = 0
         V += timestep * Acceleration(nF,m)
         X += V * timestep * 0.5
-
-
-# almost all of the acceleratrion occurs in
-#the first tenth of a milisecond !!!!
 
 #radius
 radius = 0.01
@@ -79,23 +74,19 @@ lb = 0.01
 Uo = 0.005
 #inicial voltage
 Vo = 440
-#time
-time = 1000000000
 #resistance
-ohms = 1.4
+ohms = 1.5
 #capasitance
 capasitance = 0.0096
 #mass
 m = 0.0069
 #Ts is in unit of timestep
 Ts = 0.00000001
+#time
+Time = 20
+#Totaltime
+Totaltime = int(Time/Ts)
 
 ohms += parralelCapsitorsresistance(0.08,4)
 
-thoreticals(Ts,time,Vo,capasitance,ohms,radius,la,lb,Uo,m,Fr)
-
-'''
->>0.01791744
->>11.028229064853711
->>22.408752679463337
-'''
+thoreticals(Ts,Totaltime,Vo,capasitance,ohms,radius,la,lb,Uo,m,Fr)
